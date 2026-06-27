@@ -1,0 +1,51 @@
+::ffff:127.0.0.1 - - [23/Jun/2026 22:46:09] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [23/Jun/2026 22:50:37] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [23/Jun/2026 22:50:37] "GET /style.css HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [23/Jun/2026 22:50:37] "GET /script.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [23/Jun/2026 22:50:38] code 404, message File not found
+::ffff:127.0.0.1 - - [23/Jun/2026 22:50:38] "GET /favicon.ico HTTP/1.1" 404 -
+::ffff:127.0.0.1 - - [23/Jun/2026 23:11:12] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [23/Jun/2026 23:18:53] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [23/Jun/2026 23:23:56] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [23/Jun/2026 23:30:22] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [23/Jun/2026 23:30:52] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [23/Jun/2026 23:30:52] "GET /style.css HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [23/Jun/2026 23:30:52] "GET /script.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [23/Jun/2026 23:30:53] code 404, message File not found
+::ffff:127.0.0.1 - - [23/Jun/2026 23:30:53] "GET /favicon.ico HTTP/1.1" 404 -
+::ffff:127.0.0.1 - - [23/Jun/2026 23:41:02] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [23/Jun/2026 23:42:09] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [23/Jun/2026 23:42:10] "GET /style.css HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [23/Jun/2026 23:42:10] "GET /script.js HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [23/Jun/2026 23:47:20] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [23/Jun/2026 23:48:04] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [23/Jun/2026 23:48:04] "GET /style.css HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [23/Jun/2026 23:48:04] "GET /script.js HTTP/1.1" 304 -
+::ffff:127.0.0.1 - - [27/Jun/2026 13:31:37] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [27/Jun/2026 13:37:46] "GET /style.css HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [27/Jun/2026 13:39:21] "GET / HTTP/1.1" 304 -
+::ffff:127.0.0.1 - - [27/Jun/2026 13:39:22] "GET /style.css HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [27/Jun/2026 13:39:22] "GET /script.js HTTP/1.1" 304 -
+::ffff:127.0.0.1 - - [27/Jun/2026 13:39:22] code 404, message File not found
+::ffff:127.0.0.1 - - [27/Jun/2026 13:39:22] "GET /favicon.ico HTTP/1.1" 404 -
+----------------------------------------
+Exception occurred during processing of request from ('::ffff:127.0.0.1', 63386, 0, 0)
+Traceback (most recent call last):
+  File "C:\Users\karthikeya\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\karthikeya\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\http\server.py", line 1326, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "C:\Users\karthikeya\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\http\server.py", line 676, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\karthikeya\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Users\karthikeya\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\http\server.py", line 440, in handle
+    self.handle_one_request()
+  File "C:\Users\karthikeya\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\http\server.py", line 408, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\karthikeya\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+----------------------------------------
