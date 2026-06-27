@@ -120,14 +120,14 @@ def infer_level(score, years_count, project_count):
     return "Needs major improvement"
 
 
-def score_resume(text, target_role, job_description=""):
+def score_resume(text, target_role, job_description="", custom_role=""):
     clean_text = normalize(text)
     lowered = clean_text.lower()
     words = re.findall(r"[a-zA-Z][a-zA-Z+#.-]*", clean_text)
     word_count = len(words)
     sections = detect_sections(text)
     found_skills = extract_skills(clean_text)
-    role = ROLE_SKILLS.get(target_role, ROLE_SKILLS["software-engineer"])
+    role = build_role_profile(target_role, job_description, custom_role)
     required = role["required"]
     advanced = role["advanced"]
     present_required = [skill for skill in required if skill in found_skills or contains_phrase(lowered, skill)]
@@ -269,8 +269,8 @@ def skill_distribution(found_skills):
     groups = {
         "Programming": {"python", "javascript", "typescript", "java", "c++", "c#", "sql"},
         "AI/Data": {"machine learning", "deep learning", "nlp", "ai", "ml", "pandas", "numpy", "tensorflow", "pytorch", "llm"},
-        "Web/Cloud": {"react", "node", "api", "rest api", "docker", "aws", "azure", "gcp", "kubernetes"},
-        "Product/Soft": {"leadership", "communication", "stakeholder", "roadmap", "agile", "problem solving"},
+        "Engineering": {"cad", "autocad", "solidworks", "manufacturing", "quality control", "automotive", "pcb", "electronics"},
+        "Business/Creative": {"leadership", "communication", "branding", "seo", "analytics", "patient care", "financial modeling", "project management"},
     }
     return {
         label: sum(1 for skill in found_skills if skill in values)
@@ -312,6 +312,35 @@ def extract_job_keywords(job_description):
     }
     frequent = [word for word, _ in Counter(word for word in words if word not in stop_words).most_common(12)]
     return sorted(set(known + frequent))[:18]
+
+
+def build_role_profile(target_role, job_description="", custom_role=""):
+    if target_role != "custom-role" and target_role in ROLE_SKILLS:
+        role = ROLE_SKILLS[target_role]
+        return {
+            "label": role["label"],
+            "required": role["required"],
+            "advanced": role["advanced"],
+        }
+
+    jd_keywords = extract_job_keywords(job_description)
+    required = jd_keywords[:10] or ROLE_SKILLS["custom-role"]["required"]
+    advanced = [skill for skill in GLOBAL_SKILLS if skill not in required][:5]
+    label = custom_role.strip() or infer_custom_label(job_description) or "Custom Role"
+    return {
+        "label": label,
+        "required": required,
+        "advanced": advanced,
+    }
+
+
+def infer_custom_label(job_description):
+    if not job_description:
+        return ""
+    match = re.search(r"\b(?:job title|role|position)\s*[:\-]\s*([A-Za-z][A-Za-z\s/&-]{2,50})", job_description, re.I)
+    if match:
+        return match.group(1).strip().title()
+    return ""
 
 
 def build_recommendations(contact, sections, word_count, missing_required, missing_job_keywords, metrics_count, action_count):
