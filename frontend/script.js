@@ -23,6 +23,8 @@ const skillChart = document.querySelector("#skillChart");
 const matchLabel = document.querySelector("#matchLabel");
 const themeToggle = document.querySelector("#themeToggle");
 const themeIcon = document.querySelector("#themeIcon");
+const targetRole = document.querySelector("#targetRole");
+const customRoleField = document.querySelector("#customRoleField");
 
 let latestAnalysis = null;
 
@@ -31,6 +33,9 @@ initTheme();
 fileInput.addEventListener("change", () => {
   fileLabel.textContent = fileInput.files[0]?.name || "Upload resume";
 });
+
+targetRole.addEventListener("change", updateCustomRoleVisibility);
+updateCustomRoleVisibility();
 
 themeToggle.addEventListener("click", () => {
   const nextTheme = getActiveTheme() === "dark" ? "light" : "dark";
@@ -269,4 +274,8 @@ function updateThemeButton(theme, isSystem) {
   themeIcon.textContent = theme === "dark" ? "D" : "L";
   themeToggle.title = isSystem ? `Using system ${theme} theme` : `Using ${theme} theme`;
   themeToggle.setAttribute("aria-label", `Switch to ${theme === "dark" ? "light" : "dark"} theme`);
+}
+
+function updateCustomRoleVisibility() {
+  customRoleField.hidden = targetRole.value !== "custom-role";
 }
