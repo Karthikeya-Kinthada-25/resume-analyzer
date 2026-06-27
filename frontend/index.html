@@ -34,8 +34,9 @@
 
           <label class="field">
             <span>Target role</span>
-            <small>The required skills and suggestions change based on this role.</small>
+            <small>Choose a role family, or use Any / Custom Job for fields like hardware, art, automobile, healthcare, finance, and more.</small>
             <select id="targetRole" name="targetRole">
+              <option value="custom-role">Any / Custom Job</option>
               <option value="software-engineer">Software Engineer</option>
               <option value="ai-engineer">AI Engineer</option>
               <option value="data-scientist">Data Scientist</option>
@@ -43,7 +44,20 @@
               <option value="frontend-developer">Frontend Developer</option>
               <option value="backend-developer">Backend Developer</option>
               <option value="product-manager">Product Manager</option>
+              <option value="hardware-engineer">Hardware Engineer</option>
+              <option value="mechanical-engineer">Mechanical Engineer</option>
+              <option value="automobile-engineer">Automobile Engineer</option>
+              <option value="graphic-designer">Graphic Designer</option>
+              <option value="digital-marketer">Digital Marketer</option>
+              <option value="finance-analyst">Finance Analyst</option>
+              <option value="healthcare-professional">Healthcare Professional</option>
             </select>
+          </label>
+
+          <label class="field" id="customRoleField">
+            <span>Custom job title</span>
+            <small>Example: Automobile Design Engineer, Fine Artist, Lab Technician, Sales Executive.</small>
+            <input id="customRole" name="customRole" type="text" placeholder="Enter any job title">
           </label>
 
           <label class="upload-zone" for="resumeFile">
@@ -61,7 +75,7 @@
 
           <label class="field">
             <span>Job description</span>
-            <small>Paste a job post to calculate match percentage and missing keywords.</small>
+            <small>For custom jobs, this is very important because the analyzer learns role keywords from the job post.</small>
             <textarea id="jobDescription" name="jobDescription" rows="7" placeholder="Paste a target job description for match score and gaps..."></textarea>
           </label>
 
@@ -83,7 +97,7 @@
           <div>
             <p class="eyebrow">Dashboard</p>
             <h2>Score, optimize, and improve your resume for the role you want.</h2>
-            <p class="hero-copy">The analyzer checks role skills, projects, experience, ATS readiness, job-description match, keyword gaps, and rewrite opportunities.</p>
+            <p class="hero-copy">The analyzer checks role skills, projects, experience, ATS readiness, job-description match, keyword gaps, and rewrite opportunities across tech and non-tech careers.</p>
           </div>
           <div class="score-orb" id="scoreOrb">
             <span id="scoreValue">--</span>
@@ -99,7 +113,7 @@
               <h3>Skill Fit</h3>
               <span id="roleLabel">Choose a role</span>
             </div>
-            <p class="section-note">Shows which required role skills are already present, which are missing, and what advanced skills to learn next.</p>
+            <p class="section-note">Shows which role skills are already present, which are missing, and what advanced skills to learn next. For custom jobs, the job description drives the required skills.</p>
             <div id="skillGroups" class="chip-stack empty-state">Run an analysis to see matched, missing, and high-priority skills.</div>
           </section>
 
