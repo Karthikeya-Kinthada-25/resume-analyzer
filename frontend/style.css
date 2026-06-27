@@ -295,6 +295,7 @@ h3 {
 }
 
 select,
+input,
 textarea {
   width: 100%;
   border: 1px solid var(--line);
@@ -310,6 +311,11 @@ select {
   padding: 0 12px;
 }
 
+input {
+  height: 44px;
+  padding: 0 12px;
+}
+
 textarea {
   resize: vertical;
   min-height: 104px;
@@ -318,6 +324,7 @@ textarea {
 }
 
 select:focus,
+input:focus,
 textarea:focus {
   border-color: var(--blue);
   box-shadow: 0 0 0 3px var(--focus);
