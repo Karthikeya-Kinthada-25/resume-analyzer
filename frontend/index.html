@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume Analyzer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="workspace">
+      <aside class="panel input-panel">
+        <div class="brand-row">
+          <div class="brand-lockup">
+            <div class="mark">RA</div>
+            <div>
+              <p class="eyebrow">AI-style analyzer</p>
+              <h1>Resume Analyzer</h1>
+            </div>
+          </div>
+          <button class="theme-toggle" type="button" id="themeToggle" aria-label="Switch theme" title="Switch theme">
+            <span id="themeIcon">A</span>
+          </button>
+        </div>
+
+        <form id="analyzeForm" class="form-stack">
+          <div class="help-card">
+            <strong>How it works</strong>
+            <p>Upload or paste your resume, choose a target role, optionally paste a job description, then run the analyzer to get scores, missing skills, ATS checks, and stronger bullet suggestions.</p>
+          </div>
+
+          <label class="field">
+            <span>Target role</span>
+            <small>The required skills and suggestions change based on this role.</small>
+            <select id="targetRole" name="targetRole">
+              <option value="software-engineer">Software Engineer</option>
+              <option value="ai-engineer">AI Engineer</option>
+              <option value="data-scientist">Data Scientist</option>
+              <option value="data-analyst">Data Analyst</option>
+              <option value="frontend-developer">Frontend Developer</option>
+              <option value="backend-developer">Backend Developer</option>
+              <option value="product-manager">Product Manager</option>
+            </select>
+          </label>
+
+          <label class="upload-zone" for="resumeFile">
+            <input id="resumeFile" name="resume" type="file" accept=".pdf,.docx,.txt,.md">
+            <span class="upload-icon">+</span>
+            <strong id="fileLabel">Upload resume</strong>
+            <small>PDF, DOCX, TXT, or MD</small>
+          </label>
+
+          <label class="field">
+            <span>Or paste resume text</span>
+            <small>Use this if you do not want to upload a file.</small>
+            <textarea id="resumeText" name="resumeText" rows="9" placeholder="Paste your resume content here..."></textarea>
+          </label>
+
+          <label class="field">
+            <span>Job description</span>
+            <small>Paste a job post to calculate match percentage and missing keywords.</small>
+            <textarea id="jobDescription" name="jobDescription" rows="7" placeholder="Paste a target job description for match score and gaps..."></textarea>
+          </label>
+
+          <button class="primary-button" type="submit">
+            <span>Analyze resume</span>
+            <span aria-hidden="true">&rarr;</span>
+          </button>
+          <div class="action-row">
+            <button class="secondary-button" type="button" id="improveButton">Improve bullets</button>
+            <button class="secondary-button" type="button" id="voiceButton">Read feedback</button>
+          </div>
+          <p class="helper-text">Improve bullets rewrites project or achievement lines into professional resume bullets. Read feedback speaks the latest analysis aloud.</p>
+          <p class="status" id="statusText"></p>
+        </form>
+      </aside>
+
+      <section class="results-area">
+        <div class="hero-band">
+          <div>
+            <p class="eyebrow">Dashboard</p>
+            <h2>Score, optimize, and improve your resume for the role you want.</h2>
+            <p class="hero-copy">The analyzer checks role skills, projects, experience, ATS readiness, job-description match, keyword gaps, and rewrite opportunities.</p>
+          </div>
+          <div class="score-orb" id="scoreOrb">
+            <span id="scoreValue">--</span>
+            <small>overall</small>
+          </div>
+        </div>
+
+        <div class="grid metrics-grid" id="metricsGrid"></div>
+
+        <div class="content-grid">
+          <section class="panel">
+            <div class="section-heading">
+              <h3>Skill Fit</h3>
+              <span id="roleLabel">Choose a role</span>
+            </div>
+            <p class="section-note">Shows which required role skills are already present, which are missing, and what advanced skills to learn next.</p>
+            <div id="skillGroups" class="chip-stack empty-state">Run an analysis to see matched, missing, and high-priority skills.</div>
+          </section>
+
+          <section class="panel">
+            <div class="section-heading">
+              <h3>AI Suggestions</h3>
+              <span id="levelLabel">Current level</span>
+            </div>
+            <p class="section-note">Gives dynamic recommendations based on your score, missing sections, weak impact, missing skills, and job-description gaps.</p>
+            <ol id="recommendations" class="recommendations empty-state">
+              <li>Your prioritized resume improvements will appear here.</li>
+            </ol>
+          </section>
+        </div>
+
+        <div class="content-grid">
+          <section class="panel">
+            <div class="section-heading">
+              <h3>Keyword Gap</h3>
+              <span id="matchLabel">0% match</span>
+            </div>
+            <p class="section-note">Compares your resume against the target role and pasted job description to find present, missing, and high-priority keywords.</p>
+            <div id="keywordGap" class="chip-stack empty-state">Present, missing, and high-priority keywords will appear here.</div>
+          </section>
+
+          <section class="panel">
+            <div class="section-heading">
+              <h3>Skill Distribution</h3>
+              <span>Chart</span>
+            </div>
+            <p class="section-note">Groups extracted skills into categories so you can quickly see whether your resume leans technical, AI/data, cloud, or product.</p>
+            <div id="skillChart" class="bar-chart empty-state">Skill chart will appear after analysis.</div>
+          </section>
+        </div>
+
+        <section class="panel">
+          <div class="section-heading">
+            <h3>ATS And Deep Signals</h3>
+            <span id="wordCount">0 words</span>
+          </div>
+          <p class="section-note">Checks resume length, contact links, measurable achievements, action verbs, keyword density, and formatting risks that can affect ATS parsing.</p>
+          <div class="signals-grid" id="signalsGrid"></div>
+        </section>
+
+        <section class="panel">
+          <div class="section-heading">
+            <h3>Resume Improvement Generator</h3>
+            <span>Professional bullets</span>
+          </div>
+          <p class="section-note">Finds project or achievement-like lines and rewrites them with stronger action verbs, role skills, and measurable-impact language.</p>
+          <div id="improvementList" class="improvement-list empty-state">Click Analyze or Improve bullets to generate stronger bullet points.</div>
+        </section>
+      </section>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
