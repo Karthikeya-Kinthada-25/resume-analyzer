@@ -66,6 +66,7 @@ def roles():
 def analyze():
     resume_text = request.form.get("resumeText", "")
     target_role = request.form.get("targetRole", "software-engineer")
+    custom_role = request.form.get("customRole", "")
     job_description = request.form.get("jobDescription", "")
 
     uploaded_file = request.files.get("resume")
@@ -75,7 +76,7 @@ def analyze():
     if not resume_text.strip():
         return jsonify({"error": "Upload a resume file or paste resume text."}), 400
 
-    result = score_resume(resume_text, target_role, job_description)
+    result = score_resume(resume_text, target_role, job_description, custom_role)
     return jsonify(result)
 
 
@@ -87,7 +88,12 @@ def improve():
         resume_text = extract_text(uploaded_file)
     if not resume_text.strip():
         return jsonify({"error": "Upload a resume file or paste resume text."}), 400
-    analysis = score_resume(resume_text, request.form.get("targetRole", "software-engineer"), request.form.get("jobDescription", ""))
+    analysis = score_resume(
+        resume_text,
+        request.form.get("targetRole", "software-engineer"),
+        request.form.get("jobDescription", ""),
+        request.form.get("customRole", ""),
+    )
     return jsonify({"improvements": generate_improvements(resume_text, analysis["skills"]["found"])})
 
 
